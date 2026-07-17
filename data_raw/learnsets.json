@@ -136467,6 +136467,9 @@
       "assurance": [
         "9M"
       ],
+      "barbbarrage": [
+        "9M"
+      ],
       "blizzard": [
         "9M"
       ],
@@ -353769,7 +353772,22 @@
         "9M"
       ]
     },
-    "eventOnly": false
+    "eventOnly": true,
+    "eventData": [
+      {
+        "generation": 9,
+        "level": 72,
+        "nature": "Modest",
+        "moves": [
+          "lightofruin",
+          "energyball",
+          "gigadrain",
+          "synthesis"
+        ],
+        "pokeball": "pokeball",
+        "source": "gen9legends"
+      }
+    ]
   },
   "floettemega": {
     "exists": true,

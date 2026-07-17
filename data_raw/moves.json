@@ -1578,7 +1578,8 @@
     },
     "zMove": {
       "basePower": 200
-    }
+    },
+    "chloroblastRecoil": true
   },
   "clangoroussoul": {
     "name": "Clangorous Soul",

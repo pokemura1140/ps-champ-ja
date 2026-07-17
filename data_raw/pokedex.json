@@ -19811,9 +19811,9 @@
       "Steel"
     ],
     "prevo": "",
-    "tier": "OU",
-    "doublesTier": "OU",
-    "natDexTier": "OU",
+    "tier": "(OU)",
+    "doublesTier": "(OU)",
+    "natDexTier": "(OU)",
     "evos": [],
     "nfe": false,
     "eggGroups": [
@@ -86231,9 +86231,9 @@
       "Poison"
     ],
     "prevo": "",
-    "tier": "OU",
-    "doublesTier": "OU",
-    "natDexTier": "OU",
+    "tier": "(OU)",
+    "doublesTier": "(OU)",
+    "natDexTier": "(OU)",
     "evos": [],
     "nfe": false,
     "eggGroups": [
@@ -88626,9 +88626,9 @@
       "Ghost"
     ],
     "prevo": "Gimmighoul",
-    "tier": "OU",
-    "doublesTier": "OU",
-    "natDexTier": "OU",
+    "tier": "Uber",
+    "doublesTier": "Uber",
+    "natDexTier": "Uber",
     "evos": [],
     "evoType": "other",
     "nfe": false,
