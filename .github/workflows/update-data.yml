@@ -1,0 +1,108 @@
+name: Update Champions JP data
+
+on:
+  schedule:
+    # 毎日 03:00 JST (18:00 UTC) に champions mod の更新有無をチェックする
+    - cron: '0 18 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ps-champ-ja
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Clone & build pokemon-showdown
+        run: |
+          git clone --depth 1 https://github.com/smogon/pokemon-showdown.git ../pokemon-showdown
+          cd ../pokemon-showdown
+          npm ci
+          npm run build
+
+      - name: Extract raw data from champions mod
+        run: node scripts/extract-champions-raw.js ../pokemon-showdown
+
+      - name: Build English flat data
+        run: node scripts/build-data-en.js
+
+      - name: Download langmap tables
+        run: python scripts/download-langmap.py
+
+      - name: Translate to Japanese
+        run: python scripts/translate-data.py
+
+      - name: Validate generated data
+        id: validate
+        continue-on-error: true
+        run: node scripts/validate-data.js
+
+      - name: Stage generated data
+        if: steps.validate.outcome == 'success'
+        id: diff
+        run: |
+          git add data_raw data_en data_jp
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit & push updated data
+        if: steps.validate.outcome == 'success' && steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: champions mod のデータ更新を反映 ($(date -u +%Y-%m-%d))"
+          git push origin HEAD:main
+
+      - name: Report validation failure
+        if: steps.validate.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -A
+          git diff --cached --stat > /tmp/diffstat.txt || true
+
+          BODY_FILE=$(mktemp)
+          {
+            echo "champions mod のデータ更新パイプラインで検証エラーが発生しました。"
+            echo "新しいフォルム違いポケモン等が追加され、langmap/_form_langmap.csv の手動更新が必要になっている可能性があります。"
+            echo ""
+            echo "対象ワークフロー実行: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            echo ""
+            echo '```'
+            cat /tmp/diffstat.txt
+            echo '```'
+            echo ""
+            echo "### translate-data.py の未解決ログ (抜粋)"
+            echo '```'
+            tail -c 4000 data_jp/translate_unresolved.log 2>/dev/null || echo "(ログなし)"
+            echo '```'
+          } > "$BODY_FILE"
+
+          git checkout -- . 2>/dev/null || true
+          git clean -fd data_raw data_en data_jp 2>/dev/null || true
+
+          EXISTING=$(gh issue list --label auto-update-failed --state open --json number --jq '.[0].number' || echo "")
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body-file "$BODY_FILE"
+          else
+            gh issue create --title "champions mod データ自動更新が検証エラーで失敗" \
+              --label auto-update-failed --body-file "$BODY_FILE"
+          fi
+          exit 1
