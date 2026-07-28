@@ -26934,9 +26934,9 @@
       "Psychic"
     ],
     "prevo": "",
-    "tier": "UU",
-    "doublesTier": "UU",
-    "natDexTier": "UU",
+    "tier": "UUBL",
+    "doublesTier": "UUBL",
+    "natDexTier": "UUBL",
     "evos": [],
     "nfe": false,
     "eggGroups": [
@@ -40150,9 +40150,9 @@
       "Ghost"
     ],
     "prevo": "",
-    "tier": "UU",
-    "doublesTier": "UU",
-    "natDexTier": "UU",
+    "tier": "UUBL",
+    "doublesTier": "UUBL",
+    "natDexTier": "UUBL",
     "evos": [],
     "nfe": false,
     "eggGroups": [
@@ -76555,9 +76555,9 @@
       "Ghost"
     ],
     "prevo": "Sinistea",
-    "tier": "UU",
-    "doublesTier": "UU",
-    "natDexTier": "UU",
+    "tier": "UUBL",
+    "doublesTier": "UUBL",
+    "natDexTier": "UUBL",
     "evos": [],
     "evoType": "useItem",
     "nfe": false,
@@ -76617,9 +76617,9 @@
       "Ghost"
     ],
     "prevo": "Sinistea-Antique",
-    "tier": "UU",
-    "doublesTier": "UU",
-    "natDexTier": "UU",
+    "tier": "UUBL",
+    "doublesTier": "UUBL",
+    "natDexTier": "UUBL",
     "evos": [],
     "evoType": "useItem",
     "nfe": false,
