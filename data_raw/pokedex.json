@@ -96151,7 +96151,8 @@
     "spriteid": "obliteryx",
     "abilities": {
       "0": "Opportunist",
-      "1": "Analytic"
+      "1": "Early Bird",
+      "H": "Sniper"
     },
     "types": [
       "Dark",
@@ -96164,7 +96165,8 @@
     "evos": [],
     "nfe": false,
     "eggGroups": [
-      "Flying"
+      "Flying",
+      "Dragon"
     ],
     "canHatch": true,
     "gender": "",
@@ -96177,10 +96179,10 @@
       "atk": 128,
       "def": 126,
       "spa": 45,
-      "spd": 90,
+      "spd": 78,
       "spe": 64
     },
-    "bst": 555,
+    "bst": 543,
     "weightkg": 62,
     "weighthg": 620,
     "heightm": 1.6,
